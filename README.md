@@ -39,7 +39,7 @@ Once booted back up, run the following commands to setup OPZgo:
 ```
 $ sudo apt-get update
 $ sudo apt-get install git
-$ git@github.com:chrisdiana/OPZgo.git
+$ git clone git@github.com:chrisdiana/OPZgo.git
 $ cd OPZgo/
 $ sudo sh setup.sh
 ```
