@@ -66,7 +66,7 @@ Add a new line `sudo python3 /home/pi/OPZgo/opzgo.py &` (towards the end of the 
 Backups will be saved to `/opzgo/backups/`. Within that folder, backups are saved as timestamped directories each time you trigger a backup. You can access them by either SSH'ing into the Pi or by using a convenient tool like [Cyberduck](https://cyberduck.io) to easily connect to your Pi and interact like you would a FTP server.
 
 
-### Troubleshooting & a few things to note
+## Troubleshooting & a few things to note
 
 * Sometimes the OP-Z will fail to connect or mount. If after a long time (>10 minutes) you still don't see the series of LED patterns described above, do NOT assume the backup was successful. Try unplugging the power from the Pi, reboot and try again.
 
