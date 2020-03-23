@@ -2,7 +2,7 @@
 
 >Ultra-portable backups for Teenage Engineering's OP-Z
 
-![OPZgo running on Raspberry Pi Zero](https://imgur.com/912jaiD)
+![OPZgo running on Raspberry Pi Zero](https://i.imgur.com/912jaiD.jpg)
 
 Inspired by [tacoe's OP1GO](https://github.com/tacoe/OP1GO), this small script allows for full OP-Z backups while on the go using a Raspberry Pi Zero W. Simply plug your OP-Z into the Pi Zero and it will automatically create a timestamped full backup of your OP-Z including any projects, sample packs, bounces or configurations.
 
