@@ -1,4 +1,18 @@
-#! /usr/bin/python
+#!/usr/bin/python
+
+"""
+
+  OPZgo
+  -----
+  Ultra-portable backups for Teenage Engineering's OP-Z
+
+  :usage: sudo python3 opzgo.py <optional-backup-root-location>
+  :version: 0.1.1
+  :copyright: 2020 Chris Diana
+  :license: MIT
+
+"""
+
 import os
 import sys
 import re
@@ -14,9 +28,10 @@ PRODUCT = 0x000c
 USBID_OPZ = "*OP-Z_Disk*"
 MOUNT_DIR = "/media/opz"
 BACKUP_DIR_FORMAT = "%Y-%m-%d_%H-%M-%S"
-HOME = "/opzgo"
-BACKUPS_DIR = os.path.join(HOME, "backups")
-MOUNT_STATUS = False
+
+DEFAULT_BACKUP_ROOT = "/opzgo"
+BACKUP_ROOT = sys.argv[1] if len(sys.argv) > 1 else DEFAULT_BACKUP_ROOT
+BACKUPS_DIR = os.path.join(BACKUP_ROOT, "backups")
 
 # OP-Z connection
 def ensure_connection():
@@ -79,7 +94,7 @@ def backup_files(source, destination):
   subprocess.call(["rsync", "-rP", source + '/', dstroot])
   blink(1)
 
-# misc
+# utils
 def blink(count):
   os.system("echo none | sudo tee /sys/class/leds/led0/trigger >/dev/null 2>&1")
   for i in range(0,count):
@@ -88,25 +103,28 @@ def blink(count):
     os.system("echo 1 | sudo tee /sys/class/leds/led0/brightness >/dev/null 2>&1")
     time.sleep(0.05)
 
-def blinklong():
+def blink_long(count):
   os.system("echo none | sudo tee /sys/class/leds/led0/trigger >/dev/null 2>&1")
   os.system("echo 0 | sudo tee /sys/class/leds/led0/brightness >/dev/null 2>&1")
-  time.sleep(1)
+  time.sleep(count)
   os.system("echo 1 | sudo tee /sys/class/leds/led0/brightness >/dev/null 2>&1")
 
-def blinkyay():
+def blink_yay():
   os.system("echo none | sudo tee /sys/class/leds/led0/trigger >/dev/null 2>&1")
-  for i in range(0,1000000):
+  for i in range(0,30):
     os.system("echo 0 | sudo tee /sys/class/leds/led0/brightness >/dev/null 2>&1")
     time.sleep(0.01)
     os.system("echo 1 | sudo tee /sys/class/leds/led0/brightness >/dev/null 2>&1")
     time.sleep(0.01)
 
+def shutdown():
+    os.system("sudo shutdown -h now")
+
 
 ## Main ##
 
 # create mount point and local backup folders
-blinklong()
+blink(2)
 forcedir(BACKUPS_DIR)
 forcedir(MOUNT_DIR)
 
@@ -114,6 +132,7 @@ forcedir(MOUNT_DIR)
 print(" > Starting - waiting for OP-Z to connect")
 ensure_connection()
 time.sleep(5)
+blink_long(3)
 
 # mount OP-Z
 mount_path = get_mount_path()
@@ -131,4 +150,6 @@ print(" > Unmounting OP-Z")
 unmount_device(MOUNT_DIR)
 eject_device(mount_path)
 print(" > Done.")
-blinkyay()
+blink_yay()
+blink_long(5)
+shutdown()
