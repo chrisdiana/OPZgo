@@ -27,53 +27,22 @@ Inspired by [tacoe's OP1GO](https://github.com/tacoe/OP1GO), this small script a
 7. Once you see no more LED blinks the Pi has safely shut down. It's now safe to disconnect the OP-Z and unplug the Pi.
 
 
-## Manual Setup
+## Setup 
 
-1. Prepare SD Card
+**Quick Start:**
 
-* Download the latest [Raspbian Lite](https://www.raspberrypi.org/downloads/raspbian/).
-* Flash the Raspian image to your Micro SD card. [Etcher](https://www.balena.io/etcher/) is a great choice.
-* Pop the SD into your Pi Zero and boot it up.  
+1. Download the [latest OPZgo image here](https://mega.nz/#!KpVTlQKA!0iSO4_0hDjeTeQvDeuK2WALMTdKEfOoMUL8eYqAzXQE).
+2. Flash to a SD card using [Etcher](https://www.balena.io/etcher/).
+3. Plug it into your Raspberry Pi and you're ready to start making backups!
 
-2. Configure the Pi
+**Manual Setup:**
 
-* Login using the default password `raspberry`.
-* Run `sudo raspi-config` 
-* Inside the configuration menu you'll probably want to change your password using `Option 1 (Change User Password)`. Then, navigate back the the main screen.
-* Next, you'll want to connect to the internet. Select `Option 2 (Network Options)` and then select `N2 Wi-fi` to enter your network name and password.
-* Navigate back to the main screen and click `<Finish>` to exit the configuration menu.
-* It should then prompt you to reboot your Pi Zero. If not, reboot it using `sudo reboot`.
-
-3. Setup OPZgo
-
-Once booted back up, run the following commands to setup OPZgo:
-
-```
-$ sudo apt-get update
-$ sudo apt-get install git
-$ git clone https://github.com/chrisdiana/OPZgo.git
-$ sudo sh OPZgo/setup.sh
-```
-
-Finally we're going to make the script run every time the Pi Zero starts.
-
-```
-$ sudo nano /etc/rc.local
-```
-
-Add a new line `sudo python3 /home/pi/OPZgo/opzgo.py &` (towards the end of the file, before the `exit` statement) and then save. Now you can unplug your Pi as it's ready to start making backups!
+If you wish to manually install it yourself, check out the [instructions here](https://github.com/chrisdiana/OPZgo/wiki/Manual-Setup).
 
 
 ## Accessing Backups
 
-By default, backups will be saved to `/opzgo/backups/`. Within that folder, backups are saved as timestamped directories each time you trigger a backup. You can access them by either SSH'ing into the Pi or by using a convenient tool like [Cyberduck](https://cyberduck.io) to easily connect to your Pi and interact like you would a FTP server.
-
-You can change the backup location by passing the location as an argument. For example, if you wanted to save backups to `/boot` so you can easily access them through the SD card edit your `/etc/rc.local` file and change the command to `sudo python3 /home/pi/OPZgo/opzgo.py /boot/opzgo &`.
-
-
-## Resizing the `/boot` partition
-
-If you are saving files to `/boot` instead of the root file system, you may want to expand the partion to allow for more backups. Check out [this tutorial](https://learn.adafruit.com/resizing-raspberry-pi-boot-partition/overview) in order to do this.
+You can access backups by plugging the SD card into a computer. You should see a disk called `BOOT`. Within `BOOT` all backups are saved to `opzgo/backups/` as timestamped directories each time you trigger a backup. 
 
 
 ### Troubleshooting & a few things to note
